@@ -23,4 +23,57 @@ where a.ArtistId = 28;
 
 --Write a SELECT statement to display how many songs exist for each album.
 --You'll need to use the COUNT() function and the GROUP BY keyword sequence.
+SELECT COUNT(s.Title) AS 'Track Count', 
+a.Title AS 'Album Title'
+FROM Song s
+LEFT JOIN Album a ON a.Id = s.AlbumId
+GROUP BY a.Title;
+
+--Write a SELECT statement to display how many songs exist for each artist.
+--You'll need to use the COUNT() function and the GROUP BY keyword sequence.
+SELECT COUNT(s.Title) AS 'Track Count', 
+ar.ArtistName AS 'Artist'
+FROM Song s
+LEFT JOIN Artist ar ON ar.Id = s.ArtistId
+GROUP BY ar.ArtistName;
+
+--Write a SELECT statement to display how many songs exist for each genre. 
+--You'll need to use the COUNT() function and the GROUP BY keyword sequence.
+SELECT COUNT(s.Title) AS 'Track Count', 
+g.Label AS 'Genre'
+FROM Song s
+LEFT JOIN Genre g ON g.Id = s.GenreId
+GROUP BY g.Label;
+
+--Using MAX() function, write a select statement to find the album with the longest duration. 
+--The result should display the album title and the duration.
+SELECT Title AS 'Album Title',
+AlbumLength AS 'Duration'
+FROM Album
+WHERE AlbumLength = (
+	SELECT MAX(AlbumLength)
+	FROM Album
+);
+
+--Using MAX() function, write a select statement to find the song with the longest duration.
+--The result should display the song title and the duration.
+SELECT Title AS 'Song Title',
+SongLength AS 'Duration'
+FROM Song
+WHERE SongLength = (
+	SELECT MAX(SongLength)
+	FROM Song
+);
+
+--Modify the previous query to also display the title of the album.
+SELECT s.Title AS 'Song Title',
+s.SongLength AS 'Duration',
+a.Title AS 'Album Title'
+FROM Song s
+LEFT JOIN Album a ON a.Id = s.AlbumId
+WHERE SongLength = (
+	SELECT MAX(SongLength)
+	FROM Song
+);
+
 
